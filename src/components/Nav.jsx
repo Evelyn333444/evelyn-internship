@@ -13,7 +13,7 @@ const Nav = () => {
   };
 
   return (
-    <header className="transparent header-light scroll-light smaller">
+    <header className={`transparent header-light scroll-light smaller`}>
       <div className="container">
         <div className="row">
           <div className="col-md-12">

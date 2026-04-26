@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import OwlCarousel from "react-owl-carousel";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import CountDown from "../CountDown";
+import CountDown from "../home/CountDown";
 import Skeleton from "../UI/Skeleton";
 
 const NewItems = () => {
