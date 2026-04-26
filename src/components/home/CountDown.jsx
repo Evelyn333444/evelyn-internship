@@ -5,7 +5,8 @@ const CountDown = ({ expiryDate }) => {
   const [intervalId, setIntervalId] = useState();
 
   React.useEffect(() => {
-    calculateTime();
+  calculateTime();
+}, [calculateTime]);
 
     const intervalId = setInterval(() => {
       calculateTime();
