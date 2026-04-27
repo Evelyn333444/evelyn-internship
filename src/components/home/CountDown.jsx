@@ -4,20 +4,20 @@ const CountDown = ({ expiryDate }) => {
   const [timeText, setTimeText] = useState("");
   const [intervalId, setIntervalId] = useState();
 
-  React.useEffect(() => {
-  calculateTime();
-}, [calculateTime]);
+React.useEffect(() => {
+  calculateTime();  // ← you already have this
+  
 
-    const intervalId = setInterval(() => {
-      calculateTime();
-    }, 1000);
+  const id = setInterval(() => {   // ← add this
+    calculateTime();
+  }, 1000);
 
-    setIntervalId(intervalId);
+  setIntervalId(id);   // ← add this
 
-    return () => {
-      clearInterval(intervalId);
-    }
-  }, []);
+  return () => {       // ← add this
+    clearInterval(id);
+  };
+}, []);
 
   function calculateTime() {
     const millisLeft = expiryDate - Date.now();

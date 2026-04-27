@@ -1,6 +1,6 @@
 import React from "react";
 import AuthorBanner from "../images/author_banner.jpg";
-import AuthorItems from "../components/author/AuthorItems";
+import AuthorItems from "./author/AuthorItems";
 import { Link } from "react-router-dom";
 import AuthorImage from "../images/author_thumbnail.jpg";
 
@@ -66,4 +66,4 @@ const Author = () => {
   );
 };
 
-export default Author;
+export default AuthorItems;
