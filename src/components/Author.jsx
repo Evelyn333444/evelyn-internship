@@ -66,4 +66,4 @@ const Author = () => {
   );
 };
 
-export default AuthorItems;
+export default Author;
