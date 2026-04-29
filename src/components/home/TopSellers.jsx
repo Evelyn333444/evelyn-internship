@@ -13,6 +13,8 @@ const TopSellers = () => {
     setTopSellers(response.data);
   };
 
+  
+
   useEffect(() => {
     getExploreData();
   }, []);
