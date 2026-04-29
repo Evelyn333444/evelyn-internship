@@ -28,6 +28,7 @@ const ExploreItems = () => {
 
   useEffect(() => {
     getExploreData();
+    //any comment
   }, []);
 
   return (
