@@ -57,6 +57,9 @@ const AuthorItems = ({ authorData }) => {
                         <i className="fa fa-heart"></i>
                         <span>{item.likes}</span>
                       </div>
+                      <div className="container">
+                      <TopSeller />
+                      </div>
                     </div>
                   </div>
                 </div>
