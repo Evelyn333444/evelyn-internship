@@ -1,10 +1,29 @@
-import React from "react";
+import React, { useEffect } from "react";
 import AuthorBanner from "../images/author_banner.jpg";
 import AuthorItems from "./author/AuthorItems";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import AuthorImage from "../images/author_thumbnail.jpg";
+import axios from "axios";
 
 const Author = () => {
+  const { id } = useParams();
+  console.log(id);
+  const [authorData, setAuthorData] = React.useState(null);
+  const [followers, setFollowers] = React.useState(0);
+  const fetchAuthorData = async () => {
+    try {
+      const { data } = await axios.get(`https://us-central1-nft-cloud-functions.cloudfunctions.net/authors?author=${id}`);
+      setAuthorData(data);
+      setFollowers(data.followers);
+      console.log(data);
+    } catch (error) {
+      console.error("Error fetching author data:", error);
+    }
+  }
+
+  useEffect(() => {
+    fetchAuthorData();
+  }, [id])
   return (
     <div id="wrapper">
       <div className="no-bottom no-top" id="content">
@@ -44,10 +63,10 @@ const Author = () => {
                   </div>
                   <div className="profile_follow de-flex">
                     <div className="de-flex-col">
-                      <div className="profile_follower">573 followers</div>
-                      <Link to="#" className="btn-main">
-                        Follow
-                      </Link>
+                      <div className="profile_follower">{followers} followers</div>
+                      <button className="btn-main" onClick={() => { authorData.followers == followers ? setFollowers(followers + 1) : setFollowers(followers - 1) }}>
+                       {authorData && authorData.followers !== followers ? "Unfollow" : "Follow"}
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -55,7 +74,7 @@ const Author = () => {
 
               <div className="col-md-12">
                 <div className="de_tab tab_simple">
-                  <AuthorItems />
+                  <AuthorItems authorData={authorData} />
                 </div>
               </div>
             </div>

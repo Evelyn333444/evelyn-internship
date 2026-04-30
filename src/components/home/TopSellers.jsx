@@ -3,21 +3,48 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import Skeleton from "../UI/Skeleton";
 
+const TopSeller = ({ authorId, authorImage, authorName, price }) => {
+
+  return (
+    <>
+      <li data-aos="fade-in" data-aos-duration="400">
+        <div className="author_list_pp">
+          <Link to={`/author/${authorId}}`}>
+            <img className="lazy pp-author" src={authorImage} alt="" />
+            <i className="fa fa-check"></i>
+          </Link>
+        </div>
+        <div className="author_list_info">
+          <Link to={`/author/${authorId}}`}>{authorName}</Link>
+          <span>{price} ETH</span>
+        </div>
+      </li>
+    </>
+
+  );
+
+};
 const TopSellers = () => {
   const [topSellers, setTopSellers] = useState([]);
-  const getExploreData = async () => {
-    const response = await axios.get(
-      `https://us-central1-nft-cloud-functions.cloudfunctions.net/topSellers`
+  const [loading, setLoading] = useState(true);
+  async function fetchTopSellers() {
+    const { data } = await axios.get(
+      "https://us-central1-nft-cloud-functions.cloudfunctions.net/topSellers"
     );
 
-    setTopSellers(response.data);
-  };
+    setTopSellers(data);
+    setLoading(false);
+  }
 
-  
+
 
   useEffect(() => {
-    getExploreData();
+    fetchTopSellers();
   }, []);
+
+  // useEffect(() => {
+  //   getExploreData();
+  // }, []);
 
   return (
     <section id="section-popular" className="pb-5">
@@ -32,26 +59,17 @@ const TopSellers = () => {
           <div className="col-md-12 wow fadeIn">
             {topSellers.length ? (
               <ol className="author_list">
-                {topSellers.map((item, index) => (
-                  <li key={index}>
-                    <div className="author_list_pp">
-                      <Link to={`/author/${item.authorId}`}>
-                        <img
-                          className="lazy pp-author"
-                          src={item.authorImage}
-                          alt=""
-                        />
-                        <i className="fa fa-check"></i>
-                      </Link>
-                    </div>
-                    <div className="author_list_info">
-                      <Link to={`/author?author=${item.authorId}`}>
-                        {item.authorName}
-                      </Link>
-                      <span>{item.price} ETH</span>
-                    </div>
-                  </li>
-                ))}
+                {
+                  topSellers.map((seller) => (
+                    <TopSeller
+                      key={seller.id}
+                      authorImage={seller.authorImage}
+                      authorName={seller.authorName}
+                      authorId={seller.authorId}
+                      price={seller.price}
+                    />
+                  ))
+                }
               </ol>
             ) : (
               <ol className="author_list">
