@@ -1,6 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Skeleton from "../UI/Skeleton";
+import AuthorItem from "../UI/AuthorItem";
+import AuthorTop from "../UI/AuthorTop";
+import Collection from "../UI/Collection";
+import TopSeller from "../UI/TopSeller";
+import HotCollection from "../UI/HotCollection";
+import ItemDetailsSkeleton from "../UI/ItemDetailsSkeleton";
+import CollectionSkeleton from "../UI/CollectionSkeleton";
+
 
 const AuthorItems = ({ authorData }) => {
   const skeletonLoading = new Array(8).fill(0).map((_, index) => (
