@@ -14,7 +14,7 @@ const Author = () => {
     try {
       const { data } = await axios.get(`https://us-central1-nft-cloud-functions.cloudfunctions.net/authors?author=${id}`);
       setAuthorData(data);
-      setFollowers(data.followers);
+      setFollowers(Number(data.followers));
       console.log(data);
     } catch (error) {
       console.error("Error fetching author data:", error);
@@ -49,14 +49,11 @@ const Author = () => {
                       <i className="fa fa-check"></i>
                       <div className="profile_name">
                         <h4>
-                          Monica Lucas
-                          <span className="profile_username">@monicaaaa</span>
-                          <span id="wallet" className="profile_wallet">
-                            UDHUHWudhwd78wdt7edb32uidbwyuidhg7wUHIFUHWewiqdj87dy7
-                          </span>
-                          <button id="btn_copy" title="Copy Text">
-                            Copy
-                          </button>
+                        {authorData?.authorName}
+                        <span className="profile_username">@{authorData?.tag}</span>
+                        <span id="wallet" className="profile_wallet">
+                        {authorData?.address}
+                        </span>
                         </h4>
                       </div>
                     </div>
@@ -64,8 +61,13 @@ const Author = () => {
                   <div className="profile_follow de-flex">
                     <div className="de-flex-col">
                       <div className="profile_follower">{followers} followers</div>
-                      <button className="btn-main" onClick={() => { authorData.followers == followers ? setFollowers(followers + 1) : setFollowers(followers - 1) }}>
-                       {authorData && authorData.followers !== followers ? "Unfollow" : "Follow"}
+                      <button
+                      className="btn-main"
+                      onClick={() => {
+                      setFollowers(authorData.followers === followers ? followers + 1 : followers - 1);
+                      }}
+                      >
+                      {authorData?.followers !== followers ? "Unfollow" : "Follow"}
                       </button>
                     </div>
                   </div>
