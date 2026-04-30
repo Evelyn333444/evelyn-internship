@@ -13,8 +13,9 @@ const Author = () => {
   const fetchAuthorData = async () => {
     try {
       const { data } = await axios.get(`https://us-central1-nft-cloud-functions.cloudfunctions.net/authors?author=${id}`);
+      console.log("AUTHOR DATA", data);
       setAuthorData(data);
-      setFollowers(Number(data.followers));
+      setFollowers(Number(data));
       console.log(data);
     } catch (error) {
       console.error("Error fetching author data:", error);
@@ -63,11 +64,11 @@ const Author = () => {
                       <div className="profile_follower">{followers} followers</div>
                       <button
                       className="btn-main"
-                      onClick={() => {
-                      setFollowers(authorData.followers === followers ? followers + 1 : followers - 1);
-                      }}
-                      >
-                      {authorData?.followers !== followers ? "Unfollow" : "Follow"}
+                        onClick={() => {
+                          setFollowers(Number(authorData) === followers ? followers + 1 : followers - 1);
+                        }}
+                        >
+                          {Number(authorData) === followers ? "Follow" : "Unfollow"}
                       </button>
                     </div>
                   </div>
