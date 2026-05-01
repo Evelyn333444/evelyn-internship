@@ -67,12 +67,14 @@ const AuthorItems = ({ authorData }) => {
               ))}
         </div>
       </div>
-       <TopSeller
-  authorId={authorData.authorId}
-  authorImage={authorData.authorImage}
-  authorName={authorData.authorName}
-  price={item.price}
-/>
+       {authorData && (
+  <TopSeller
+    authorId={authorData.authorId}
+    authorImage={authorData.authorImage}
+    authorName={authorData.authorName}
+    price={authorData.price}
+  />
+)}
     </div>
   );
 };
