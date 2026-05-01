@@ -17,6 +17,8 @@ const AuthorItems = ({ authorData }) => {
     </div>
   ));
 
+  
+
   return (
     <div className="de_tab_content">
       <div className="tab-1">
@@ -58,7 +60,6 @@ const AuthorItems = ({ authorData }) => {
                         <span>{item.likes}</span>
                       </div>
                       <div className="container">
-                      <TopSeller />
                       </div>
                     </div>
                   </div>
@@ -66,6 +67,12 @@ const AuthorItems = ({ authorData }) => {
               ))}
         </div>
       </div>
+       <TopSeller
+  authorId={authorData.authorId}
+  authorImage={authorData.authorImage}
+  authorName={authorData.authorName}
+  price={item.price}
+/>
     </div>
   );
 };
