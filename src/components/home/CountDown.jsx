@@ -4,19 +4,17 @@ const CountDown = ({ expiryDate }) => {
   const [timeText, setTimeText] = useState("");
   const [intervalId, setIntervalId] = useState();
 
-React.useEffect(() => {
-  calculateTime();  // ← you already have this
-  
 
-  const id = setInterval(() => {   // ← add this
+React.useEffect(() => {
+  calculateTime();
+  const id = setInterval(() => {
     calculateTime();
   }, 1000);
-
-  setIntervalId(id);   // ← add this
-
-  return () => {       // ← add this
+  setIntervalId(id);
+  return () => {
     clearInterval(id);
   };
+// eslint-disable-next-line react-hooks/exhaustive-deps
 }, []);
 
   function calculateTime() {
