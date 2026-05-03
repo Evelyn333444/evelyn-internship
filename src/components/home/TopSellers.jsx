@@ -4,47 +4,46 @@ import axios from "axios";
 import Skeleton from "../UI/Skeleton";
 
 const TopSeller = ({ authorId, authorImage, authorName, price }) => {
+  const authorUrl = `/author/${authorId}`;
 
   return (
     <>
       <li data-aos="fade-in" data-aos-duration="400">
         <div className="author_list_pp">
-          <Link to={`/author/${authorId}}`}>
+          <Link to={authorUrl}>
             <img className="lazy pp-author" src={authorImage} alt="" />
             <i className="fa fa-check"></i>
           </Link>
         </div>
         <div className="author_list_info">
-          <Link to={`/author/${authorId}}`}>{authorName}</Link>
+          <Link to={authorUrl}>{authorName}</Link>
           <span>{price} ETH</span>
         </div>
       </li>
     </>
-
   );
-
 };
+
 const TopSellers = () => {
   const [topSellers, setTopSellers] = useState([]);
   const [loading, setLoading] = useState(true);
+
   async function fetchTopSellers() {
-    const { data } = await axios.get(
-      "https://us-central1-nft-cloud-functions.cloudfunctions.net/topSellers"
-    );
-
-    setTopSellers(data);
-    setLoading(false);
+    try {
+      const { data } = await axios.get(
+        "https://us-central1-nft-cloud-functions.cloudfunctions.net/topSellers"
+      );
+      setTopSellers(data);
+    } catch (error) {
+      console.error("Error fetching top sellers:", error);
+    } finally {
+      setLoading(false);
+    }
   }
-
-
 
   useEffect(() => {
     fetchTopSellers();
   }, []);
-
-  // useEffect(() => {
-  //   getExploreData();
-  // }, []);
 
   return (
     <section id="section-popular" className="pb-5">
@@ -57,31 +56,13 @@ const TopSellers = () => {
             </div>
           </div>
           <div className="col-md-12 wow fadeIn">
-            {topSellers.length ? (
-              <ol className="author_list">
-                {
-                  topSellers.map((seller) => (
-                    <TopSeller
-                      key={seller.id}
-                      authorImage={seller.authorImage}
-                      authorName={seller.authorName}
-                      authorId={seller.authorId}
-                      price={seller.price}
-                    />
-                  ))
-                }
-              </ol>
-            ) : (
+            {loading ? (
               <ol className="author_list">
                 {new Array(12).fill(0).map((item, index) => (
                   <li key={index}>
                     <div className="author_list_pp">
                       <Link to={``}>
-                        <Skeleton
-                          width="50px"
-                          height="50px"
-                          borderRadius="50%"
-                        />
+                        <Skeleton width="50px" height="50px" borderRadius="50%" />
                         <i className="fa fa-check"></i>
                       </Link>
                     </div>
@@ -96,6 +77,20 @@ const TopSellers = () => {
                   </li>
                 ))}
               </ol>
+            ) : topSellers.length ? (
+              <ol className="author_list">
+                {topSellers.map((seller) => (
+                  <TopSeller
+                    key={seller.authorId || seller.id}
+                    authorImage={seller.authorImage}
+                    authorName={seller.authorName}
+                    authorId={seller.authorId}
+                    price={seller.price}
+                  />
+                ))}
+              </ol>
+            ) : (
+              <p className="text-center">No top sellers found.</p>
             )}
           </div>
         </div>
@@ -104,4 +99,4 @@ const TopSellers = () => {
   );
 };
 
-export default TopSellers;
+export default TopSellers; 

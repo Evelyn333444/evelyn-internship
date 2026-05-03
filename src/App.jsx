@@ -4,7 +4,6 @@ import Author from "./components/Author";
 import ItemDetails from "./pages/ItemDetails";
 import Nav from "./components/Nav";
 import Footer from "./components/Footer";
-import AuthorItems from "./components/author/AuthorItems";
 import Home from "./pages/Home";
   
 
